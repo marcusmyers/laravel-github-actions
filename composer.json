@@ -1,0 +1,54 @@
+{
+    "name": "marcusmyers/laravel-github-actions",
+    "description": "A package to add the ability to use github actions in your application or package",
+    "keywords": [
+        "marcusmyers",
+        "laravel-github-actions"
+    ],
+    "homepage": "https://github.com/marcusmyers/laravel-github-actions",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Mark Myers",
+            "email": "marcusmyers@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "5.8.*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.8.*",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Marcusmyers\\LaravelGithubActions\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Marcusmyers\\LaravelGithubActions\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Marcusmyers\\LaravelGithubActions\\LaravelGithubActionsServiceProvider"
+            ],
+            "aliases": {
+                "LaravelGithubActions": "Marcusmyers\\LaravelGithubActions\\LaravelGithubActionsFacade"
+            }
+        }
+    }
+}
