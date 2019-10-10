@@ -1,30 +1,31 @@
-# Very short description of the package
+# Laravel Github Actions
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/marcusmyers/laravel-github-actions.svg?style=flat-square)](https://packagist.org/packages/marcusmyers/laravel-github-actions)
-[![Build Status](https://img.shields.io/travis/marcusmyers/laravel-github-actions/master.svg?style=flat-square)](https://travis-ci.org/marcusmyers/laravel-github-actions)
-[![Quality Score](https://img.shields.io/scrutinizer/g/marcusmyers/laravel-github-actions.svg?style=flat-square)](https://scrutinizer-ci.com/g/marcusmyers/laravel-github-actions)
 [![Total Downloads](https://img.shields.io/packagist/dt/marcusmyers/laravel-github-actions.svg?style=flat-square)](https://packagist.org/packages/marcusmyers/laravel-github-actions)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+Up and running with [GitHub Actions](https://github.com/features/actions) for your [Laravel](https://www.laravel.com) project. Currently, all actions are for testing your application. This will require you to signup for [GitHub Actions](https://github.com/features/actions), once available to your GitHub account this package can be installed in your project.
 
 ## Installation
 
-You can install the package via composer:
+This is just a small set of files that sets up [GitHub Actions](https://github.com/features/actions) per project. There is nothing to install globally!
 
 ```bash
 composer require marcusmyers/laravel-github-actions
 ```
 
-## Usage
-
+If all you want is just the simple phpunit test suite run this after install.
 ``` php
-// Usage description here
+php artisan vendor:publish --provider="Marcusmyers\LaravelGithubActions\LaravelGithubActionsServiceProvider" --tag="ci-actions"
 ```
 
-### Testing
+For dusk browser testing run the following:
+``` php
+php artisan vendor:publish --provider="Marcusmyers\LaravelGithubActions\LaravelGithubActionsServiceProvider" --tag="dusk-actions"
+```
 
-``` bash
-composer test
+For all testing run the following:
+``` php
+php artisan vendor:publish --provider="Marcusmyers\LaravelGithubActions\LaravelGithubActionsServiceProvider" --tag="all-actions"
 ```
 
 ### Changelog
@@ -42,7 +43,6 @@ If you discover any security related issues, please email marcusmyers@gmail.com 
 ## Credits
 
 - [Mark Myers](https://github.com/marcusmyers)
-- [All Contributors](../../contributors)
 
 ## License
 

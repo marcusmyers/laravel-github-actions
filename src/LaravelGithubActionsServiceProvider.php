@@ -11,37 +11,25 @@ class LaravelGithubActionsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /*
-         * Optional methods to load your package assets
-         */
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laravel-github-actions');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-github-actions');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
-
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('laravel-github-actions.php'),
-            ], 'config');
-
-            // Publishing the views.
-            /*$this->publishes([
-                __DIR__.'/../resources/views' => resource_path('views/vendor/laravel-github-actions'),
-            ], 'views');*/
-
-            // Publishing assets.
-            /*$this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/laravel-github-actions'),
-            ], 'assets');*/
-
-            // Publishing the translation files.
-            /*$this->publishes([
-                __DIR__.'/../resources/lang' => resource_path('lang/vendor/laravel-github-actions'),
-            ], 'lang');*/
-
-            // Registering package commands.
-            // $this->commands([]);
+        if ( !file_exists(base_path('.github'))) {
+            mkdir(base_path('.github'));
         }
+
+        if ( !file_exists(base_path('.github/workflows'))) {
+            mkdir(base_path('.github/workflows'));
+        }
+        $this->publishes([
+            __DIR__.'/../github-action-files/ci.yml' => base_path('.github/workflows/ci.yml'),
+        ], 'ci-actions');
+
+        $this->publishes([
+            __DIR__.'/../github-action-files/dusk.yml' => base_path('.github/workflows/dusk.yml'),
+        ], 'dusk-actions');
+
+        $this->publishes([
+            __DIR__.'/../github-action-files/ci.yml' => base_path('.github/workflows/ci.yml'),
+            __DIR__.'/../github-action-files/dusk.yml' => base_path('.github/workflows/dusk.yml'),
+        ], 'all-actions');
     }
 
     /**
@@ -49,12 +37,5 @@ class LaravelGithubActionsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'laravel-github-actions');
-
-        // Register the main class to use with the facade
-        $this->app->singleton('laravel-github-actions', function () {
-            return new LaravelGithubActions;
-        });
     }
 }

@@ -6,6 +6,7 @@
         "laravel-github-actions"
     ],
     "homepage": "https://github.com/marcusmyers/laravel-github-actions",
+    "version": "1.0.0",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -15,22 +16,13 @@
             "role": "Developer"
         }
     ],
-    "require": {
-        "php": "^7.1",
-        "illuminate/support": "5.8.*"
-    },
+    "require": {},
     "require-dev": {
-        "orchestra/testbench": "3.8.*",
-        "phpunit/phpunit": "^7.0"
+        "orchestra/testbench": "3.8.*"
     },
     "autoload": {
         "psr-4": {
             "Marcusmyers\\LaravelGithubActions\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Marcusmyers\\LaravelGithubActions\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -38,17 +30,11 @@
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
 
     },
-    "config": {
-        "sort-packages": true
-    },
     "extra": {
         "laravel": {
             "providers": [
                 "Marcusmyers\\LaravelGithubActions\\LaravelGithubActionsServiceProvider"
-            ],
-            "aliases": {
-                "LaravelGithubActions": "Marcusmyers\\LaravelGithubActions\\LaravelGithubActionsFacade"
-            }
+            ]
         }
     }
 }

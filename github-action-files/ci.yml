@@ -1,0 +1,32 @@
+on: push
+name: Run phpunit testsuite
+jobs:
+  phpunit-test-suite:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+    - name: Prepare Laravel Application
+      run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
+    - name: Install composer dependencies
+      run: |
+        composer install --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+    - name: Generate key
+      run: php artisan key:generate
+    - name: Create DB and schemas
+      run: |
+        mkdir -p database/testing
+        touch database/testing/database.sqlite
+        php artisan migrate:install
+        php artisan migrate
+    - name: Compile assets
+      run: |
+        yarn install --pure-lockfile
+        yarn run production --progress false
+    - name: Run Testsuite
+      run: vendor/bin/phpunit
