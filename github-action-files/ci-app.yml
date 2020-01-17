@@ -1,7 +1,7 @@
 on: push
-name: Run Dusk testsuite
+name: Run phpunit testsuite
 jobs:
-  dusk-host:
+  phpunit-test-suite:
     runs-on: ubuntu-latest
 
     strategy:
@@ -13,7 +13,7 @@ jobs:
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v2
 
     - name: Get Composer Cache Directory
@@ -35,42 +35,25 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
           coverage: none
 
-    - name: Redis Server in GitHub Actions
-      uses: superchargejs/redis-github-action@1.1.0
-      with:
-        redis version: '4'
-
     - name: Validate composer.json and composer.lock
       run: composer validate
 
     - name: Prepare Laravel Application
-      run: php -r "file_exists('.env') || copy('.env.dusk.testing', '.env');"
+      run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
 
     - name: Install composer dependencies
-      run: composer install --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist --optimize-autoloader
+      run: |
+        composer install --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
     - name: Generate key
       run: php artisan key:generate
 
     - name: Create DB and schemas
       run: |
-        mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS \`laravel\` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci";
+        mkdir -p database/testing
+        touch database/testing/database.sqlite
         php artisan migrate:install
-        php artisan migrate --seed
+        php artisan migrate
 
-    - name: Compile assets
-      run: |
-        yarn install --pure-lockfile
-        yarn run dev --progress false
-
-    - name: Update Chrome Driver
-      run: php artisan dusk:chrome-driver
-
-    - name: Start Chrome Driver
-      run: ./vendor/laravel/dusk/bin/chromedriver-linux > /dev/null 2>&1 &
-
-    - name: Run Laravel Server
-      run: php artisan serve > /dev/null 2>&1 &
-
-    - name: Run Dusk Tests
-      run: php artisan dusk
+    - name: Run Testsuite
+      run: vendor/bin/phpunit
