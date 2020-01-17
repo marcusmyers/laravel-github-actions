@@ -15,7 +15,12 @@ composer require marcusmyers/laravel-github-actions
 
 If all you want is just the simple phpunit test suite run this after install.
 ``` php
-php artisan vendor:publish --provider="Marcusmyers\LaravelGithubActions\LaravelGithubActionsServiceProvider" --tag="ci-actions"
+php artisan vendor:publish --provider="Marcusmyers\LaravelGithubActions\LaravelGithubActionsServiceProvider" --tag="app-actions"
+```
+
+If you are writing a package run this after install
+``` php
+php artisan vendor:publish --provider="Marcusmyers\LaravelGithubActions\LaravelGithubActionsServiceProvider" --tag="package-actions"
 ```
 
 For dusk browser testing run the following:
@@ -23,9 +28,9 @@ For dusk browser testing run the following:
 php artisan vendor:publish --provider="Marcusmyers\LaravelGithubActions\LaravelGithubActionsServiceProvider" --tag="dusk-actions"
 ```
 
-For all testing run the following:
+For all app testing run the following:
 ``` php
-php artisan vendor:publish --provider="Marcusmyers\LaravelGithubActions\LaravelGithubActionsServiceProvider" --tag="all-actions"
+php artisan vendor:publish --provider="Marcusmyers\LaravelGithubActions\LaravelGithubActionsServiceProvider" --tag="all-app-actions"
 ```
 
 ### Changelog
