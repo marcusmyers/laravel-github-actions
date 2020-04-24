@@ -33,6 +33,16 @@ For all app testing run the following:
 php artisan vendor:publish --provider="Marcusmyers\LaravelGithubActions\LaravelGithubActionsServiceProvider" --tag="all-app-actions"
 ```
 
+### Private Packagist Repo
+
+In order to install packages that are on a private packagist server you
+will have to add the following to workflow file. The example below uses
+Laravel Nova.
+
+```
+composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_PASSWORD }}
+```
+
 ### Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
